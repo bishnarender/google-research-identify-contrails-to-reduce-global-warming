@@ -64,11 +64,12 @@ The biggest problem with using Vision Transformers for image is that Global Self
 Here the new approach is based on multi-axis attention (Max-SA), which decomposes the full-size attention (each pixel attends to all the pixels) used in ViT into two sparse forms — local and (sparse/dilated) global. This reduces the quadratic complexity of vanilla/vit attention to linear, without any loss of non-locality. As shown in the figure below, the multi-axis attention contains a sequential stack of "block attention" and "grid attention". The block attention works within non-overlapping windows (small patches in intermediate feature maps) to capture local patterns, while the grid attention works on a <b>sparsely sampled</b> uniform grid for long-range (global) interactions. The window sizes (P and G) of "grid and block attentions" can be fully controlled as hyperparameters to ensure a linear computational complexity to the input size.
 
 The same colors are spatially mixed by the self-attention operation.
+
 [Image Reference](https://blog.research.google/2022/09/a-multi-axis-approach-for-vision.html)
 
 In MaxViT, author first build a single MaxViT block (shown below) by concatenating MBConv (proposed by EfficientNet, V2) with the multi-axis attention. This single block can encode local and global visual information regardless of input resolution. Author then simply stack repeated blocks composed of attention and convolutions in a hierarchical architecture (similar to ResNet, CoAtNet), yielding our homogenous MaxViT architecture. Notably, MaxViT is distinguished from previous hierarchical approaches as it can “see” globally throughout the entire network, even in earlier, high-resolution stages, demonstrating stronger model capacity on various tasks.
 
-<p style="text-align: center;">[Image Reference](https://blog.research.google/2022/09/a-multi-axis-approach-for-vision.html)</p>
+<p align="center">[Image Reference](https://blog.research.google/2022/09/a-multi-axis-approach-for-vision.html)</p>
 
 Let X be input feature map of shape [224,224,3] i.e., HxWxC. Instead of applying self-attention on the flattened spatial dimension 50176 (HW), author block the feature into a tensor of shape [(224/7)×(224/7),7×7,3] i.e., [1024, 49, 3] where P=7. ​Note that after window/block partition, the block dimensions are gathered onto the spatial dimension (i.e., -2 axis). This represents partitioning into non-overlapping windows​/blocks, each of size 7×7. Applying self-attention on the local spatial dimension i.e., 7 × 7, is equivalent to attending within a small window. We will use this <b>block attention</b> to conduct local interactions. 
 
