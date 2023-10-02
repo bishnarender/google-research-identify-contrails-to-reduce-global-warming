@@ -70,6 +70,7 @@ The same colors are spatially mixed by the self-attention operation.
 [Image Reference](https://blog.research.google/2022/09/a-multi-axis-approach-for-vision.html)
 
 In MaxViT, author first build a single MaxViT block (shown below) by concatenating MBConv (proposed by EfficientNet, V2) with the multi-axis attention. This single block can encode local and global visual information regardless of input resolution. Author then simply stack repeated blocks composed of attention and convolutions in a hierarchical architecture (similar to ResNet, CoAtNet), yielding our homogenous MaxViT architecture. Notably, MaxViT is distinguished from previous hierarchical approaches as it can “see” globally throughout the entire network, even in earlier, high-resolution stages, demonstrating stronger model capacity on various tasks.
+
 ![maxvit](https://github.com/bishnarender/google-research-identify-contrails-to-reduce-global-warming/assets/49610834/a6a50b7a-d9a0-4bf5-b202-ae4d95a2f1c2)
 [Image Reference](https://blog.research.google/2022/09/a-multi-axis-approach-for-vision.html)
 
@@ -92,7 +93,6 @@ while the global, sparse/dilated Grid Attention module is formulated as:
 <p align="center">x ← x + Ungrid(RelAttention(Grid(LN(x))))</p>
 <p align="center">x ← x + MLP(LN(x)) </p>
 where we omit the QKV input format in the RelAttention operation for simplicity. A RelAttention operation applied on the -2 axis. LN denotes the Layer Normalization, where MLP is a standard MLP network consisting of two linear layers: x ← W2GELU(W1x). Block converts input [H,W,C] to shape [(H/7)*(W/7),7*7,3]. Unblock converts input [(H/7)*(W/7),7*7,3] to shape [H,W,C]. The same is for grid and ungrid.
-
 
 Instead of firstly flattening the multi-dimensional input/map as ViT does, Axial attention of some models applies self-attention first column-wise at a time and then row-wise, finally combining the attention maps of multiple axes to achieve a global receptive field.
 
