@@ -92,7 +92,7 @@ Multi-axis attention module. Given an input tensor x ε R<sup>H×W×C</sup>, the
 while the global, sparse/dilated Grid Attention module is formulated as:
 <p align="center">x ← x + Ungrid(RelAttention(Grid(LN(x))))</p>
 <p align="center">x ← x + MLP(LN(x)) </p>
-where we omit the QKV input format in the RelAttention operation for simplicity. A RelAttention operation applied on the -2 axis. LN denotes the Layer Normalization, where MLP is a standard MLP network consisting of two linear layers: x ← W2GELU(W1x). Block converts input [H,W,C] to shape [(H/7)*(W/7),7*7,3]. Unblock converts input [(H/7)*(W/7),7*7,3] to shape [H,W,C]. The same is for grid and ungrid.
+<p>where we omit the QKV input format in the RelAttention operation for simplicity. A RelAttention operation applied on the -2 axis. LN denotes the Layer Normalization, where MLP is a standard MLP network consisting of two linear layers: x ← W2GELU(W1x). Block converts input [H,W,C] to shape [(H/7)*(W/7),7*7,3]. Unblock converts input [(H/7)*(W/7),7*7,3] to shape [H,W,C]. The same is for grid and ungrid.</p>
 
 Instead of firstly flattening the multi-dimensional input/map as ViT does, Axial attention of some models applies self-attention first column-wise at a time and then row-wise, finally combining the attention maps of multiple axes to achieve a global receptive field.
 
