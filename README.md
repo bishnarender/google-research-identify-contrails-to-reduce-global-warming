@@ -24,6 +24,7 @@ a = np.load('%s/band_%02d.npy' % (path, k))[:, :, 1:5]
 
 ### ViT 
 -----
+<b>This single model is used with 2 folds for obtaining the final result.</b>
 ![ic-](https://github.com/bishnarender/google-research-identify-contrails-to-reduce-global-warming/assets/49610834/28482b87-6d55-4c2d-8101-78054602783f)
 
 Original input is in the form [4, 3, 256, 256] where 4 denotes 4 time-steps and 3 denotes 3 bands (i.e., band_11, band_14 and band_15). It is resized to [4, 3, 512, 512] using torchvision.transforms. This is further transformed to model input [3, 1024, 1024] as follows:
